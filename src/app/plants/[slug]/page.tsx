@@ -3,9 +3,9 @@ import PlantCard from '@/components/client-side/PlantCard'
 import React from 'react'
 
 interface SlugProps {
-    params: {
-        slug: Promise<string>
-    }
+    params: Promise<{
+        slug: string
+    }>
 }
 
 const page = async({ params }: SlugProps) => {
