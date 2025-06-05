@@ -10,17 +10,34 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+   // Next.js + TypeScript preset from compat layer
+  ...compat.extends('next/core-web-vitals', 'next'),
+
+  // TypeScript config
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: parserTs,
+      parserOptions: {
+        project: true,
+      },
+    },
+    plugins: {
+      '@typescript-eslint': pluginTs,
+      react: pluginReact,
+    },
     rules: {
-      // Mematikan error assignment type dari Prisma atau package lain
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-return": "off",
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-this-alias': 'off',
     },
   },
+
+  // Optional: JS fallback config
+  {
+    files: ['**/*.js'],
+    ...js.configs.recommended,
+  },
+  
 ];
 
 export default eslintConfig;
